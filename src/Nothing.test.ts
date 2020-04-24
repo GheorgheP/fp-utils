@@ -1,5 +1,5 @@
 import { isNothing, onNothing, orElse } from "./Nothing";
-import { nothings, empties, values, prettify } from "./utils";
+import { nothings, empties, values, prettify } from "./internals/utils";
 import { _const } from "./const";
 
 describe("Testing 'isNothing' function", () => {

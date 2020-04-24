@@ -1,4 +1,4 @@
-import { empties, nothings, prettify, values } from "./utils";
+import { empties, nothings, prettify, values } from "./internals/utils";
 import { id } from "./id";
 
 describe("Testing 'id' function", () => {

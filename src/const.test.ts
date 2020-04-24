@@ -1,4 +1,4 @@
-import { empties, nothings, prettify, values } from "./utils";
+import { empties, nothings, prettify, values } from "./internals/utils";
 import { _const } from "./const";
 
 describe("Testing '_const' function", () => {

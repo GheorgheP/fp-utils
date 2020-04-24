@@ -10,7 +10,7 @@
         "noUnusedParameters": true,
         "noUnusedLocals": true,
         "noImplicitAny": true,
-        "target": "es6",
+        "target": "es5",
         "lib": ["es2017"],
         "skipLibCheck": true,
         "outDir": "dist",
@@ -20,7 +20,7 @@
     "exclude": [
         "node_modules",
         "dist",
-        "**/*.test.ts",
-        "**/utils.ts"
+        "src/internals/*",
+        "**/*.test.ts"
     ]
 }

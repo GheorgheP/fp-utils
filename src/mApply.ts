@@ -1,5 +1,4 @@
 import { isNothing, MNothing } from "./Nothing";
-import { MVal } from "./types";
 
 type Nullify<T> = { [P in keyof T]: MNothing<T[P]> };
 
@@ -13,6 +12,6 @@ type Nullify<T> = { [P in keyof T]: MNothing<T[P]> };
  *  mApply(sum, null, 3) === undefined
  *  mApply(sum, 2, undefined) === undefined
  */
-export function mApply<A extends any[], R>(f: (...a: A) => R, ...args: Nullify<A>): MVal<R> {
+export function mApply<A extends any[], R>(f: (...a: A) => R, ...args: Nullify<A>): R | undefined {
   return args.some(isNothing) ? undefined : f(...(args as A));
 }
