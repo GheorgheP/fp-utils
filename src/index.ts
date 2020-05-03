@@ -3,7 +3,7 @@ export * from "./const";
 export * from "./curry2";
 export * from "./id";
 export * from "./lift";
-export * from "./mApply";
+export * from "./mCall";
 export * from "./mCompose";
 export * from "./mFn";
 export * from "./Nothing";
