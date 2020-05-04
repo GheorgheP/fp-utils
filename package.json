@@ -1,7 +1,7 @@
 {
-  "name": "fp",
+  "name": "fp-utilities",
   "version": "0.1.1",
-  "description": "",
+  "description": "A starter library to integrate fp in an existing project",
   "main": "index.js",
   "scripts": {
     "build": "tsc",
