@@ -2,7 +2,7 @@ import { isNothing, MNothing } from "./Nothing";
 
 type _Fn = (...args: any) => any;
 type _F<R> = (...args: any) => MNothing<R>;
-type _F1<T, R> = (t: T) => R;
+type _F1<T, R> = (t: T) => MNothing<R>;
 type _Rt<T extends _Fn> = ReturnType<T>;
 type _P<T extends _Fn> = Parameters<T>;
 
