@@ -1,6 +1,6 @@
 {
   "name": "fp-utilities",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "A starter library to integrate fp in an existing project",
   "main": "dist/index.js",
   "scripts": {
