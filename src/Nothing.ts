@@ -16,4 +16,8 @@ export const isT = <T>(t: MNothing<T>): t is T => !isNothing(t);
 /**
  * Return the default value if the provided value is Nothing
  */
-export const orElse = <T>(orElse: T, v: MNothing<T>): T => (isNothing(v) ? orElse : v);
+export function orElse<T>(orElse: T): (v: MNothing<T>) => T;
+export function orElse<T>(orElse: T, v: MNothing<T>): T;
+export function orElse<T>(...args: [T] | [T, MNothing<T>]): T | ((v: MNothing<T>) => T) {
+  return args.length === 1 ? (v: MNothing<T>) => (isNothing(v) ? args[0] : v) : isNothing(args[1]) ? args[0] : args[1];
+}

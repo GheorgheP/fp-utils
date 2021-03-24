@@ -4,6 +4,7 @@
     "paths": {
       "@fp": ["src/index.ts"]
     },
+    "strict": true,
     "strictNullChecks": true,
     "moduleResolution": "node",
     "esModuleInterop": true,
@@ -17,5 +18,5 @@
     "declaration": true
   },
   "include": ["src"],
-  "exclude": ["node_modules", "dist", "src/internals/*", "src/__tests__/*"]
+  "exclude": ["node_modules", "dist", "src/internals/*", "src/__tests__/*", "src/parsers/__tests__/*"]
 }
