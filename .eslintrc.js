@@ -13,6 +13,7 @@ module.exports = {
     "import/no-default-export": 2,
     "import/named": 2,
     "@typescript-eslint/no-explicit-any": 0,
+    "@typescript-eslint/ban-ts-comment": 0,
   },
   settings: {
     react: {
