@@ -6,6 +6,8 @@
   "scripts": {
     "build": "tsc",
     "test": "jest",
+    "tscheck": "tsc -p tsconfig-check.json",
+    "lint": "eslint . --ext .ts,.tsx",
     "prepack": "npm i && npm run build"
   },
   "repository": {
@@ -18,11 +20,14 @@
   "author": "gheorghep",
   "license": "MIT",
   "devDependencies": {
-    "prettier": "^2.0.4",
     "@types/jest": "^25.2.1",
+    "@typescript-eslint/eslint-plugin": "^4.19.0",
+    "eslint": "^7.22.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jest": "^24.3.2",
     "jest": "^25.3.0",
+    "prettier": "^2.0.4",
     "ts-jest": "^25.4.0",
     "typescript": "^3.8.3"
-  },
-  "dependencies": {}
+  }
 }

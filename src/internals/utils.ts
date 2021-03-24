@@ -15,6 +15,6 @@ export const prettify = (v: unknown): string => {
 
 export const nothings = [null, undefined];
 export const empties = [NaN, 0, "", [], {}];
-export const values = [1, "value", [1, 2], { a: 1 }, () => true, () => false];
+export const values = [1, "value", [1, 2], { a: 1 }, (): boolean => true, (): boolean => false];
 
 export const id = <T>(t: T): T => t;
