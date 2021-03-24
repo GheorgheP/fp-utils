@@ -1,5 +1,5 @@
-import { liftA2 } from "./lift";
-import { id } from "./id";
+import { liftA2 } from "../liftA2";
+import { id } from "../internals/utils";
 
 describe("Testing 'liftA2' function", () => {
   const sum = (a: number, b: number): number => a + b;

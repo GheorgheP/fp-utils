@@ -1,26 +1,21 @@
 {
-    "compilerOptions": {
-        "baseUrl": "./",
-        "paths": {
-            "@fp": ["src/index.ts"]
-        },
-        "strictNullChecks": true,
-        "moduleResolution": "node",
-        "esModuleInterop": true,
-        "noUnusedParameters": true,
-        "noUnusedLocals": true,
-        "noImplicitAny": true,
-        "target": "es5",
-        "lib": ["es2017"],
-        "skipLibCheck": true,
-        "outDir": "dist",
-        "declaration": true
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@fp": ["src/index.ts"]
     },
-    "include": ["src"],
-    "exclude": [
-        "node_modules",
-        "dist",
-        "src/internals/*",
-        "**/*.test.ts"
-    ]
+    "strictNullChecks": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "noUnusedParameters": true,
+    "noUnusedLocals": true,
+    "noImplicitAny": true,
+    "target": "es5",
+    "lib": ["es2017"],
+    "skipLibCheck": true,
+    "outDir": "dist",
+    "declaration": true
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "dist", "src/internals/*", "src/__tests__/*"]
 }

@@ -1,6 +1,5 @@
-import { isNothing, onNothing, orElse } from "./Nothing";
-import { nothings, empties, values, prettify } from "./internals/utils";
-import { _const } from "./const";
+import { isNothing, orElse } from "../Nothing";
+import { nothings, empties, values, prettify } from "../internals/utils";
 
 describe("Testing 'isNothing' function", () => {
   test.each(nothings)("If value is %s, return true", (v) => {
@@ -26,22 +25,6 @@ describe("Testing 'orElse' function", () => {
     test(`If value is ${prettify(v)}, return value`, () => {
       const or = {};
       expect(orElse(or, v)).toBe(v);
-    });
-  });
-});
-
-describe("Testing 'onNothing' function", () => {
-  nothings.map((v) => {
-    test(`If value is ${prettify(v)}, return orCall result`, () => {
-      const or = {};
-      expect(onNothing(_const(or))(v)).toBe(or);
-    });
-  });
-
-  [...empties, ...values].map((v) => {
-    test(`If value is ${prettify(v)}, return value`, () => {
-      const or = {};
-      expect(onNothing(_const(or))(v)).toBe(v);
     });
   });
 });

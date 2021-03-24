@@ -3,7 +3,6 @@ module.exports = {
   transform: {
     "^.+\\.ts$": "ts-jest",
   },
-  testRegex: "\\.test\\.ts$",
   testPathIgnorePatterns: ["<rootDir>(?!/src/).+"],
   globals: {
     "ts-jest": {
