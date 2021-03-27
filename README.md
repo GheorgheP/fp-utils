@@ -16,3 +16,110 @@ In some specific codebases, values like `""` are considered as `Nothing` too, so
 ## Where is `Just`?
 The library uses intensively the all known `Maybe` monad, but in same time, there is no instance of `Nothing` and `Just`. Any value tht is not [`Nothing`](https://github.com/GheorgheP/fp-utils/blob/master/src/Nothing.ts) (or in other words, is not `undefined` or `null`) is considered as `Just`. No value is wrapped in a `Just` layer.
 
+## Docs
+
+### Nothing
+
+`Nothing` describes the `null` and `undefined` values. In this library they are considered as the same value.
+
+```ts
+import { Nothing } from "fp-utitlities/Nothing";
+
+const asNull: Nothing = null;
+const asUndefined: Nothing = undefined;
+```
+
+### MNothing
+`MNothing<T>` is a generic type that describes whenever a value may be `Nothing` or not.
+
+```ts
+import { MNothing } from "fp-utitlities/Nothing";
+
+type MString = MNothing<string>
+
+const asNull: MString = null;
+const asUndefined: MString = undefined;
+const asString: MString = "test";
+```
+
+### isNothing
+Check is the value is a `Nothing` value
+
+```ts
+import { isNothing, MNothing } from "fp-utitlities/Nothing";
+
+const ls: Array<MNothing<number>> = [1, undefined, 3, null, 4];
+
+const emptiesCount = ls.filter(isNothing).length; // 2
+```
+
+### isT
+Check whenever a potential maybe value is empty or not
+
+```ts
+import { isT } from "fp-utitlities/Nothing";
+
+const inc = (a: number): number => a + 1
+
+const ls: Array<number|undefined> = [1, undefined, 3, undefined, 4];
+const incremented = ls.filter(isT).map(inc); // [2, 4, 5]
+```
+
+### orElse
+Return the default value if the provided value is Nothing
+Note: the type of the default value needs to be the same as the type of the checked value.
+
+`orElese` is already curried, so you can use it in both full applied or partial applied form.
+
+```ts
+import { orElse } from "fp-utitlities/Nothing";
+
+const ls: Array<string|undefined> = ["😁", undefined, "😁", undefined, "😁"];
+const fillWithSmiles = ls.map(orElse("😱")); // ["😁", "😱", "😁", "😱", "😁"]
+```
+
+### pass
+Provide a predicate and a value for it.
+If predicate returns `true`, return back that value.
+Otherwise, return `undefined`.
+Note: `pass` support both simple boolean predicates and [type guards](https://basarat.gitbook.io/typescript/type-system/typeguard).
+So you get full type checker support.
+`pass` is very handy in combination with `mPipe`, when you want to guard the pipe with a predicate.
+
+`pass` is already curried, so you can use it in both full applied or partial applied form.
+
+```ts
+import { pass, mPipe } from "fp-utitlities";
+
+type Mood = "good" | "bad"
+
+const isMood = (s: string): s is Mood => ["good", "bad"].includes(s as Mood);
+const isGood = (m: Mood): m is "good" => m === "good"
+const isBad = (m: Mood): m is "bad" => m === "bad"
+
+// Read a "good" value from a string
+const goodMoodGalsses = mPipe(pass(isMood), pass(isGood));
+
+// Read a "bad" value from a string
+const badMoodGalsses = mPipe(pass(isMood), pass(isBad));
+```
+
+### liftA2
+Apply a binary function over result of 2 single functions.
+
+
+```ts
+import { liftA2 } from "fp-utitlities/liftA2";
+
+const sum = (a: number, b: number): number => a + b
+const inc = (a: number): number => a + 1
+const double = (a: number): number => a * 2
+
+const fn = liftA2(sum, inc, double);
+
+fn(2,3) /// 9
+```
+
+
+
+
