@@ -1,5 +1,3 @@
-import { Const } from "./const";
-
 export type Nothing = undefined | null;
 
 export type MNothing<T> = T | Nothing;
@@ -11,12 +9,15 @@ export type MNothing<T> = T | Nothing;
 export const isNothing = (v: unknown): v is Nothing => v === null || v === undefined;
 
 /**
- * Return the default value if the provided value is Nothing
+ * Check whenever an potential maybe value is empty or not
  */
-export const orElse = <T>(orElse: T, v: MNothing<T>): T => (isNothing(v) ? orElse : v);
+export const isT = <T>(t: MNothing<T>): t is T => !isNothing(t);
 
 /**
- * Return the result of callable if value is Nothing
- * Use when the left value may require some computation, otherwise use `orElse`
+ * Return the default value if the provided value is Nothing
  */
-export const onNothing = <A>(orCall: Const<A>) => (v: MNothing<A>): A => (isNothing(v) ? orCall() : v);
+export function orElse<T>(orElse: T): (v: MNothing<T>) => T;
+export function orElse<T>(orElse: T, v: MNothing<T>): T;
+export function orElse<T>(...args: [T] | [T, MNothing<T>]): T | ((v: MNothing<T>) => T) {
+  return args.length === 1 ? (v: MNothing<T>) => (isNothing(v) ? args[0] : v) : isNothing(args[1]) ? args[0] : args[1];
+}
