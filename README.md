@@ -56,6 +56,7 @@ const emptiesCount = ls.filter(isNothing).length; // 2
 ### isT
 Check whenever a potential maybe value is empty or not
 
+[stackblitz](https://stackblitz.com/edit/fp-utilities-ist?devtoolsheight=100&file=index.ts)
 ```ts
 import { isT } from "fp-utitlities/Nothing";
 
@@ -71,11 +72,14 @@ Note: the type of the default value needs to be the same as the type of the chec
 
 `orElese` is already curried, so you can use it in both full applied or partial applied form.
 
+[stackblitz](https://stackblitz.com/edit/fp-utilities-orelse?devtoolsheight=100&file=index.ts)
 ```ts
-import { orElse } from "fp-utitlities/Nothing";
+import { orElse } from "fp-utilities";
 
-const ls: Array<string|undefined> = ["😁", undefined, "😁", undefined, "😁"];
-const fillWithSmiles = ls.map(orElse("😱")); // ["😁", "😱", "😁", "😱", "😁"]
+const ls: Array<string | undefined> = ["😁", undefined, "😁", undefined, "😁"];
+const fillWithSmiles = ls.map(orElse("😱"));
+
+console.log(fillWithSmiles); // ["😁", "😱", "😁", "😱", "😁"];
 ```
 
 ### pass
@@ -88,20 +92,29 @@ So you get full type checker support.
 
 `pass` is already curried, so you can use it in both full applied or partial applied form.
 
+[stackblitz](https://stackblitz.com/edit/fp-utilities-pass?file=index.ts)
 ```ts
-import { pass, mPipe } from "fp-utitlities";
+import { pass, mPipe } from "fp-utilities";
 
-type Mood = "good" | "bad"
+type Mood = "good" | "bad";
 
 const isMood = (s: string): s is Mood => ["good", "bad"].includes(s as Mood);
-const isGood = (m: Mood): m is "good" => m === "good"
-const isBad = (m: Mood): m is "bad" => m === "bad"
+const isGood = (m: Mood): m is "good" => m === "good";
+const isBad = (m: Mood): m is "bad" => m === "bad";
 
 // Read a "good" value from a string
 const goodMoodGalsses = mPipe(pass(isMood), pass(isGood));
 
 // Read a "bad" value from a string
 const badMoodGalsses = mPipe(pass(isMood), pass(isBad));
+
+console.log(goodMoodGalsses("no mood")); // undefined
+console.log(goodMoodGalsses("bad")); // undefined
+console.log(goodMoodGalsses("good")); // "good"
+
+console.log(badMoodGalsses("no mood")); // undefined
+console.log(badMoodGalsses("good")); // undefined
+console.log(badMoodGalsses("bad")); // "bad"
 ```
 
 ### liftA2
