@@ -45,6 +45,7 @@ const asString: MString = "test";
 ### isNothing
 Check is the value is a `Nothing` value
 
+[ [stackblitz](https://stackblitz.com/edit/fp-utilities-isnothing?devtoolsheight=100&file=index.ts) ]
 ```ts
 import { isNothing, MNothing } from "fp-utitlities/Nothing";
 
@@ -56,7 +57,7 @@ const emptiesCount = ls.filter(isNothing).length; // 2
 ### isT
 Check whenever a potential maybe value is empty or not
 
-[stackblitz](https://stackblitz.com/edit/fp-utilities-ist?devtoolsheight=100&file=index.ts)
+[ [stackblitz](https://stackblitz.com/edit/fp-utilities-ist?devtoolsheight=100&file=index.ts) ]
 ```ts
 import { isT } from "fp-utitlities/Nothing";
 
@@ -72,7 +73,7 @@ Note: the type of the default value needs to be the same as the type of the chec
 
 `orElese` is already curried, so you can use it in both full applied or partial applied form.
 
-[stackblitz](https://stackblitz.com/edit/fp-utilities-orelse?devtoolsheight=100&file=index.ts)
+[ [stackblitz](https://stackblitz.com/edit/fp-utilities-orelse?devtoolsheight=100&file=index.ts) ]
 ```ts
 import { orElse } from "fp-utilities";
 
@@ -92,7 +93,7 @@ So you get full type checker support.
 
 `pass` is already curried, so you can use it in both full applied or partial applied form.
 
-[stackblitz](https://stackblitz.com/edit/fp-utilities-pass?file=index.ts)
+[ [stackblitz](https://stackblitz.com/edit/fp-utilities-pass?file=index.ts) ]
 ```ts
 import { pass, mPipe } from "fp-utilities";
 
@@ -120,19 +121,15 @@ console.log(badMoodGalsses("bad")); // "bad"
 ### liftA2
 Apply a binary function over result of 2 single functions.
 
-
+[ [stackblitz](https://stackblitz.com/edit/fp-utilities-lifta2?devtoolsheight=100&file=index.ts) ]
 ```ts
-import { liftA2 } from "fp-utitlities/liftA2";
+import { liftA2 } from "fp-utilities";
 
-const sum = (a: number, b: number): number => a + b
-const inc = (a: number): number => a + 1
-const double = (a: number): number => a * 2
+const sum = (a: number, b: number): number => a + b;
+const inc = (a: number): number => a + 1;
+const double = (a: number): number => a * 2;
 
 const fn = liftA2(sum, inc, double);
 
-fn(2,3) /// 9
+console.log(fn(2, 3)); // 9
 ```
-
-
-
-
