@@ -133,3 +133,38 @@ const fn = liftA2(sum, inc, double);
 
 console.log(fn(2, 3)); // 9
 ```
+
+
+### mPipe
+Apply a binary function over result of 2 single functions.
+
+[ [stackblitz](https://stackblitz.com/edit/fp-utilities-mpipe?devtoolsheight=100&file=index.ts) ]
+```ts
+import { mPipe, pass } from "fp-utilities";
+
+type T = {
+  a?: {
+    b?: {
+      c?: {
+        d?: "bingo";
+      };
+    };
+  };
+};
+
+const readBingo: (t: T) => "bingo" | undefined = mPipe(
+  (v: T) => v.a,
+  v => v.b,
+  v => v.c,
+  v => v.d
+);
+
+console.log(readBingo(undefined)); // undefined
+console.log(readBingo({})); // undefined
+console.log(readBingo({ a: {} })); // undefined
+console.log(readBingo({ a: { b: {} } })); // undefined
+console.log(readBingo({ a: { b: { c: {} } } })); // undefined
+console.log(readBingo({ a: { b: { c: { d: undefined } } } })); // undefined
+console.log(readBingo({ a: { b: { c: { d: "bingo" } } } })); // "bingo"
+
+```
