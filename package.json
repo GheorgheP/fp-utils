@@ -1,6 +1,6 @@
 {
   "name": "fp-utilities",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "A starter library to integrate fp in an existing project",
   "main": "dist/index.js",
   "scripts": {
@@ -31,5 +31,8 @@
     "ramda": "^0.27.1",
     "ts-jest": "^26.5.4",
     "typescript": "^4.0.7"
-  }
+  },
+  "files": [
+    "dist"
+  ]
 }
