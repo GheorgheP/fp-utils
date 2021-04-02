@@ -134,7 +134,6 @@ const fn = liftA2(sum, inc, double);
 console.log(fn(2, 3)); // 9
 ```
 
-
 ### mPipe
 Apply a binary function over result of 2 single functions.
 
@@ -168,3 +167,79 @@ console.log(readBingo({ a: { b: { c: { d: undefined } } } })); // undefined
 console.log(readBingo({ a: { b: { c: { d: "bingo" } } } })); // "bingo"
 
 ```
+
+
+### match
+Provide a series of type guard predicates that satisfies the input,
+and a function that will resolve the value if it matches the type guard.
+In other words this is a type safe `if else` statement.
+In case the provided type guards list doesn't cover the entire input type,
+you'll get a type error at compile time.
+
+**Important:** `match` function requires ts `strictFunctionTypes` or `strict` compiler option to be enabled.
+
+[ [codesandbox](https://codesandbox.io/s/fp-utilities-match-1jgrn?file=/src/index.ts) ]
+
+Let's pretend that we have a `T` type, that is an union of `A`, `B` and `C`. We need the function `fn` that will return
+a distinct string per input `T`, for `A -> "a"`, `B -> "b"`, `C -> "c"`. In case `A`, `B`, `C` are primitive type like `number` or `string`,
+we can use `switch` statement to safely rezolve the constraints. But in case `A`, `B`, `C` are more complex types, like products or unions,
+`switch` will be a __no go__, and we are forced in using the `if else` statement.
+
+```ts 
+type A = { a: string };
+const isA = (t: T): t is A => "a" in t;
+
+type B = { b: number };
+const isB = (t: T): t is B => "b" in t;
+
+type C = { c: string[] };
+const isC = (t: T): t is C => "c" in t;
+
+type T = A | B | C;
+
+const fn = (v: T): string => {
+  if (isA(v)) {
+    return "a";
+  } else if (isB(v)) {
+    return "b";
+  } else {
+    return "c";
+  }
+};
+```
+
+
+Now let's pretend that we extend the `T` type, by adding the `D` type. Now we run in trouble as we may not know that
+somewhere we have a function `fn` that should return a distinct output for each `A`, `B`, `C` or `D` input.
+Also the type checker will not inform us at the compile time, so we will endup with a silent bug on production.
+
+Here `match` comes handy. It just uses the power of type guards in order to detect if all cases are treated.
+
+```ts 
+import { match } from "fp-utilities";
+
+type A = { a: string };
+const isA = (t: T): t is A => "a" in t;
+
+type B = { b: number };
+const isB = (t: T): t is B => "b" in t;
+
+type C = { c: string[] };
+const isC = (t: T): t is C => "c" in t;
+
+type T = A | B | C;
+
+const fn: (ab: T) => string = match(
+  [isA, () => "a"],
+  [isB, () => "b"],
+  [isC, () => "c"]
+);
+
+console.log(fn({ a: "a" })); // "a"
+console.log(fn({ b: 1 })); // "b"
+console.log(fn({ c: [] })); // "c"
+```
+Now in case we add the type `D` to `T`, compiler will give us a compile time error, as not all cases are matched.
+
+**Note:** Don't provide type guards that matches entire type, as in this case `match` will work in same way as `if else`
+statement.
