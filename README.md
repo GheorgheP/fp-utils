@@ -241,3 +241,120 @@ Now in case we add the type `D` to `T`, compiler will give us a compile time err
 
 **Note:** Don't provide type guards that matches entire type, as in this case `match` will work in same way as `if else`
 statement.
+
+
+### parse
+Parse for a object structure from an type A. Need to provide a parser function for each object key.
+If any of the parsers will return undefined, the parsing process will be stopped and will return `undefined`.
+**!Important:** If the key is optional, you are forced to tell explicitly if the parser is strict or optional.
+ - optional - even if this parser will return undefined, the parsing process will not be stopped, as the key is
+ optional by specs and it is allowed to be undefined.
+
+[ [codesandbox](https://codesandbox.io/s/parse-df9b0?file=/src/index.ts) ]
+
+```ts 
+import { parse, optional } from "fp-utilities";
+
+interface Author {
+  name?: string;
+  age?: number;
+  phone?: string;
+  email?: string;
+}
+
+interface User {
+  name: string;
+  meta: {
+    email?: string;
+    phone?: string;
+    age?: number;
+  };
+}
+
+const fromAuthor = parse<Author, User>({
+  name: (a) => a.name,
+  meta: parse<Author, User["meta"]>({
+    email: optional((v) => v.email),
+    phone: optional((v) => v.phone),
+    age: optional((v) => v.age)
+  })
+});
+
+console.log(
+  fromAuthor({
+    name: "John Doe",
+    age: 50,
+    phone: "34-56-78",
+    email: "john.doe@gmail.com"
+  })
+); // User
+
+console.log(
+  fromAuthor({
+    name: undefined,
+    age: 50,
+    phone: "34-56-78",
+    email: "john.doe@gmail.com"
+  })
+); // undefined
+
+```
+
+
+### parseStrict
+Parse for a object structure from an type A. Need to provide a parser function for each object key.
+The difference between `parse`, is that all provided parser functions need to return always a strict value,
+and should not return undefined.
+**!Important:** If the key is optional, you are forced to tell explicitly if the parser is strict or optional.
+ - optional - even if this parser will return undefined, the parsing process will not be stopped, as the key is
+ optional by specs and it is allowed to be undefined.
+
+[ [codesandbox](https://codesandbox.io/s/parsestrict-zu80x?file=/src/index.ts) ]
+
+```ts 
+import { parse, optional } from "fp-utilities";
+
+interface Author {
+  name?: string;
+  age?: number;
+  phone?: string;
+  email?: string;
+}
+
+interface User {
+  name: string;
+  meta: {
+    email?: string;
+    phone?: string;
+    age?: number;
+  };
+}
+
+const fromAuthor = parse<Author, User>({
+  name: (a) => a.name,
+  meta: parse<Author, User["meta"]>({
+    email: optional((v) => v.email),
+    phone: optional((v) => v.phone),
+    age: optional((v) => v.age)
+  })
+});
+
+console.log(
+  fromAuthor({
+    name: "John Doe",
+    age: 50,
+    phone: "34-56-78",
+    email: "john.doe@gmail.com"
+  })
+); // User
+
+console.log(
+  fromAuthor({
+    name: undefined,
+    age: 50,
+    phone: "34-56-78",
+    email: "john.doe@gmail.com"
+  })
+); // undefined
+
+```

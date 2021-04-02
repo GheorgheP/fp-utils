@@ -19,7 +19,6 @@ export const optional = <A, B>(p: Simple<ParseFunction<A, B>>): Optional<ParseFu
  * !Important: If the key is optional, you are forced to tell explicitly if the parser is strict or optional.
  *  - optional - even if this parser will return undefined, the parsing process will not be stopped, as the key is
  *  optional by specs and it is allowed to be undefined.
- *  - strict - even if the key is optional, user may want to stop parsing if current parser will return undefined
  */
 export function parse<A, B extends Record<any, any> | undefined>(
   parsers: DirtyParser<A, B>,
