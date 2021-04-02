@@ -45,7 +45,7 @@ const asString: MString = "test";
 ### isNothing
 Check is the value is a `Nothing` value
 
-[ [stackblitz](https://stackblitz.com/edit/fp-utilities-isnothing?devtoolsheight=100&file=index.ts) ]
+[ [codesandbox](https://codesandbox.io/s/isnothing-xfxmg?file=/src/index.ts) ]
 ```ts
 import { isNothing, MNothing } from "fp-utitlities/Nothing";
 
@@ -57,7 +57,7 @@ const emptiesCount = ls.filter(isNothing).length; // 2
 ### isT
 Check whenever a potential maybe value is empty or not
 
-[ [stackblitz](https://stackblitz.com/edit/fp-utilities-ist?devtoolsheight=100&file=index.ts) ]
+[ [codesandbox](https://codesandbox.io/s/ist-prjm9?file=/src/index.ts) ]
 ```ts
 import { isT } from "fp-utitlities/Nothing";
 
@@ -73,7 +73,7 @@ Note: the type of the default value needs to be the same as the type of the chec
 
 `orElese` is already curried, so you can use it in both full applied or partial applied form.
 
-[ [stackblitz](https://stackblitz.com/edit/fp-utilities-orelse?devtoolsheight=100&file=index.ts) ]
+[ [codesandbox](https://codesandbox.io/s/orelse-yvi30?file=/src/index.ts) ]
 ```ts
 import { orElse } from "fp-utilities";
 
@@ -93,7 +93,7 @@ So you get full type checker support.
 
 `pass` is already curried, so you can use it in both full applied or partial applied form.
 
-[ [stackblitz](https://stackblitz.com/edit/fp-utilities-pass?file=index.ts) ]
+[ [codesandbox](https://codesandbox.io/s/pass-2kfzt?file=/src/index.ts) ]
 ```ts
 import { pass, mPipe } from "fp-utilities";
 
@@ -121,7 +121,7 @@ console.log(badMoodGalsses("bad")); // "bad"
 ### liftA2
 Apply a binary function over result of 2 single functions.
 
-[ [stackblitz](https://stackblitz.com/edit/fp-utilities-lifta2?devtoolsheight=100&file=index.ts) ]
+[ [codesandbox](https://codesandbox.io/s/lifta2-gke48?file=/src/index.ts) ]
 ```ts
 import { liftA2 } from "fp-utilities";
 
@@ -137,9 +137,9 @@ console.log(fn(2, 3)); // 9
 ### mPipe
 Apply a binary function over result of 2 single functions.
 
-[ [stackblitz](https://stackblitz.com/edit/fp-utilities-mpipe?devtoolsheight=100&file=index.ts) ]
+[ [codesandbox](https://codesandbox.io/s/mpipe-yv40y?file=/src/index.ts) ]
 ```ts
-import { mPipe, pass } from "fp-utilities";
+import { mPipe } from "fp-utilities";
 
 type T = {
   a?: {
@@ -153,12 +153,11 @@ type T = {
 
 const readBingo: (t: T) => "bingo" | undefined = mPipe(
   (v: T) => v.a,
-  v => v.b,
-  v => v.c,
-  v => v.d
+  (v) => v.b,
+  (v) => v.c,
+  (v) => v.d
 );
 
-console.log(readBingo(undefined)); // undefined
 console.log(readBingo({})); // undefined
 console.log(readBingo({ a: {} })); // undefined
 console.log(readBingo({ a: { b: {} } })); // undefined
@@ -167,7 +166,6 @@ console.log(readBingo({ a: { b: { c: { d: undefined } } } })); // undefined
 console.log(readBingo({ a: { b: { c: { d: "bingo" } } } })); // "bingo"
 
 ```
-
 
 ### match
 Provide a series of type guard predicates that satisfies the input,
@@ -178,7 +176,7 @@ you'll get a type error at compile time.
 
 **Important:** `match` function requires ts `strictFunctionTypes` or `strict` compiler option to be enabled.
 
-[ [codesandbox](https://codesandbox.io/s/fp-utilities-match-1jgrn?file=/src/index.ts) ]
+[ [codesandbox](https://codesandbox.io/s/match-1jgrn?file=/src/index.ts) ]
 
 Let's pretend that we have a `T` type, that is an union of `A`, `B` and `C`. We need the function `fn` that will return
 a distinct string per input `T`, for `A -> "a"`, `B -> "b"`, `C -> "c"`. In case `A`, `B`, `C` are primitive type like `number` or `string`,
