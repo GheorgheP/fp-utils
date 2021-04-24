@@ -242,7 +242,63 @@ Now in case we add the type `D` to `T`, compiler will give us a compile time err
 **Note:** Don't provide type guards that matches entire type, as in this case `match` will work in same way as `if else`
 statement.
 
+### match2
+Provide a series of type guard predicates that satisfies the input,
+and a function that will resolve the value if it matches the type guard.
 
+This function is similar to `match`, but resolves 2 arguments input cases
+
+!Note: There is a big difference between `match` and `match2`
+`match2` does not force you to provide all combinations, so it can return undefined, as return type mentions.
+There is technical and coding experience limitation. 
+In order to make `match2` be strict as `match`, the use will have to provide all possible cases between first argument, and the second one. 
+This is already cartesian product, and it can get huge very easy. For 3x3 input, you get 9 combinations. 
+And yes, you guessed it, for 4x4, 16 combinations. 
+In real world usually you need 4 combinations.
+But at the same moment it enforces you to satisfy entire input type in at least one of type guards. 
+And this is what makes it different from `if else` statement.
+
+**Important:** `match2` function requires ts `strictFunctionTypes` or `strict` compiler option to be enabled.
+
+With `match2` you can very easy create type safe [`reduxjs`](https://redux.js.org/) reducers.
+
+```ts 
+// region State
+type Init = "init";
+const isInit = (s: State): s is Init => s == "init";
+
+type Error = "error";
+const isError = (s: State): s is Error => s === "error";
+
+type Ready = {
+  url: string;
+};
+const isReady = (s: State): s is Ready => "url" in (s as Ready);
+
+type State = Init | Error | Ready;
+// endregion
+
+// region Actions
+type FetchError = { type: "fetchError" };
+const isFetchError = (a: Actions): a is FetchError => a.type === "fetchError";
+
+type FetchSuccess = { type: "fetchSuccess"; payload: string };
+const isFetchSuccess = (a: Actions): a is FetchSuccess => a.type === "fetchSuccess";
+
+type Actions = FetchError | FetchSuccess;
+// endregion
+
+const reducer: (s: State, a: Actions) => Error | Ready | undefined = match2(
+  [isInit, isFetchError, () => "error"],
+  [isInit, isFetchSuccess, (_, a) => ({ url: a.payload })],
+  [isError, (_): _ is Actions => true, (s) => s],
+  [isReady, (_): _ is Actions => true, (s) => s],
+);
+```
+
+Last 2 guards are enforced by `match2`, as you need to handle all state instances at leas in one guard.
+Sure, this reducer may return undefined, but you can handle this very easy in parent reducer.
+ 
 ### parse
 Parse for a object structure from an type A. Need to provide a parser function for each object key.
 If any of the parsers will return undefined, the parsing process will be stopped and will return `undefined`.
