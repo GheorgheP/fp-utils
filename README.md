@@ -246,10 +246,12 @@ statement.
 Provide a series of type guard predicates that satisfies the input,
 and a function that will resolve the value if it matches the type guard.
 
-This function is similar to `match`, but resolves 2 arguments input cases
+This function is similar to `match`, but resolves 2 arguments input cases.
 
-!Note: There is a big difference between `match` and `match2`
-`match2` does not force you to provide all combinations, so it can return undefined, as return type mentions.
+[ [codesandbox](https://codesandbox.io/s/match2-g8jm7?file=/src/store/reducer.ts) ]
+
+!Note: There is a big difference between `match` and `match2` does not force you to provide all combinations, so it can 
+return undefined, as return type mentions.
 There is technical and coding experience limitation. 
 In order to make `match2` be strict as `match`, the use will have to provide all possible cases between first argument, and the second one. 
 This is already cartesian product, and it can get huge very easy. For 3x3 input, you get 9 combinations. 
@@ -264,36 +266,52 @@ With `match2` you can very easy create type safe [`reduxjs`](https://redux.js.or
 
 ```ts 
 // region State
-type Init = "init";
-const isInit = (s: State): s is Init => s == "init";
+type Red = "Red";
+const red = (): Red => "Red";
+const isRed = (s: State): s is Red => s === "Red";
 
-type Error = "error";
-const isError = (s: State): s is Error => s === "error";
+type RedYellow = "RedYellow";
+const redYellow = (): RedYellow => "RedYellow";
+const isRedYellow = (s: State): s is RedYellow => s === "RedYellow";
 
-type Ready = {
-  url: string;
-};
-const isReady = (s: State): s is Ready => "url" in (s as Ready);
+type Yellow = "Yellow";
+const yellow = (): Yellow => "Yellow";
+const isYellow = (s: State): s is Yellow => s === "Yellow";
 
-type State = Init | Error | Ready;
+type Green = "Green";
+const green = (): Green => "Green";
+const isGreen = (s: State): s is Green => s === "Green";
+
+type State = Red | RedYellow | Yellow | Green;
 // endregion
 
 // region Actions
-type FetchError = { type: "fetchError" };
-const isFetchError = (a: Actions): a is FetchError => a.type === "fetchError";
+type Switch = Action<"switch">;
+const _switch = (): Switch => ({ type: "switch" });
+const isSwitch = (a: Actions): a is Switch => a.type === "switch";
 
-type FetchSuccess = { type: "fetchSuccess"; payload: string };
-const isFetchSuccess = (a: Actions): a is FetchSuccess => a.type === "fetchSuccess";
-
-type Actions = FetchError | FetchSuccess;
+type Actions = Switch;
 // endregion
 
-const reducer: (s: State, a: Actions) => Error | Ready | undefined = match2(
-  [isInit, isFetchError, () => "error"],
-  [isInit, isFetchSuccess, (_, a) => ({ url: a.payload })],
-  [isError, (_): _ is Actions => true, (s) => s],
-  [isReady, (_): _ is Actions => true, (s) => s],
+// region Reducer
+import { Reducer } from "redux";
+import { match2 } from "fp-utilities";
+
+export const _reducer: (
+  s: State.State,
+  a: Actions.Actions
+) => State.State | undefined = match2(
+  [State.isRed, Actions.isSwitch, State.redYellow],
+  [State.isRedYellow, Actions.isSwitch, State.green],
+  [State.isGreen, Actions.isSwitch, State.yellow],
+  [State.isYellow, Actions.isSwitch, State.red]
 );
+
+export const reducer: Reducer<State.State, Actions.Actions> = (
+  s = State.red(),
+  a
+) => _reducer(s, a) ?? s;
+// endregion
 ```
 
 Last 2 guards are enforced by `match2`, as you need to handle all state instances at leas in one guard.
