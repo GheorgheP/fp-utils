@@ -316,6 +316,7 @@ export const reducer: Reducer<State.State, Actions.Actions> = (
 
 Last 2 guards are enforced by `match2`, as you need to handle all state instances at leas in one guard.
 Sure, this reducer may return undefined, but you can handle this very easy in parent reducer.
+
  
 ### parse
 Parse for a object structure from an type A. Need to provide a parser function for each object key.
@@ -430,5 +431,61 @@ console.log(
     email: "john.doe@gmail.com"
   })
 ); // undefined
+
+```
+
+
+### or
+Provide a series of functions and return the result of the first function that does not return `Nothing`.
+
+Let's take the example from `match2` where we create the reducer, but we need to avoid the case of returning `undefiend`.
+With `or` this problem is solved very easy and nice, as we provide the second that will just return the current state.
+```ts
+import { Reducer } from "redux";
+import { or, match2 } from "fp-utitlities";
+
+export const _reducer: (s: State.State, a: Actions.Actions) => State.State = or(
+  match2(
+    [State.isRed, Actions.isSwitch, State.redYellow],
+    [State.isRedYellow, Actions.isSwitch, State.green],
+    [State.isGreen, Actions.isSwitch, State.yellow],
+    [State.isYellow, Actions.isSwitch, State.red]
+  ),
+  state => state,
+);
+```
+Another good usage is in combination with parsers, when you want to parse for a union type, where constructors have
+different structure, and you need parse one bby one until you match the right one.
+
+```ts 
+import { parse, mPipe, or } from "fp-utilities";
+
+const readNumber = (v: unknown): number | undefined => (typeof v === "number" && !isNaN(v) ? v : undefined);
+const prop = <K extends keyof T, T extends Record<any, any>>(k: K) => (t: T): T[K] => t[k];
+
+interface Square {
+  length: number;
+}
+
+const parseSquare = parse<Record<string, unknown>, Square>({
+  length: mPipe(prop("length"), readNumber),
+});
+
+interface Rectangle {
+  width: number;
+  height: number;
+}
+const parseRectangle = parse<Record<string, unknown>, Rectangle>({
+  width: mPipe(prop("width"), readNumber),
+  height: mPipe(prop("height"), readNumber),
+});
+
+type Figure = Square | Rectangle;
+
+const parseFigure = or(parseSquare, parseRectangle);
+
+console.log(parseFigure({ length: 45 })); // With return a Square
+console.log(parseFigure({ width: 45, height: 45 })); // With return a Rectangle
+console.log(parseFigure({ width: 45 })); // With return a `undefined`
 
 ```

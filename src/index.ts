@@ -6,3 +6,4 @@ export * from "./Nothing";
 export * from "./pass";
 export * from "./parsers/parse";
 export * from "./parsers/parseStrict";
+export * from "./or";
