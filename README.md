@@ -457,6 +457,7 @@ export const _reducer: (s: State.State, a: Actions.Actions) => State.State = or(
 ```
 Another good usage is in combination with parsers, when you want to parse for a union type, where constructors have
 different structure, and you need parse one bby one until you match the right one.
+
 [ [codesandbox](https://codesandbox.io/s/or-1uvpj?file=/src/index.ts) ]
 
 ```ts 
