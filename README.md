@@ -18,6 +18,21 @@ The library uses intensively the all known `Maybe` monad, but in same time, ther
 
 ## Docs
 
+### Contents
+ - [Nothing](#nothing)
+ - [MNothing](#mnothing)
+ - [isNothing](#isnothing)
+ - [isT](#ist)
+ - [orElse](#orelse)
+ - [pass](#pass)
+ - [liftA2](#lifta2)
+ - [mPipe](#mpipe)
+ - [match](#match)
+ - [match2](#match2)
+ - [parse](#parse)
+ - [parseStrict](#parsestrict)
+ - [or](#or)
+
 ### Nothing
 
 `Nothing` describes the `null` and `undefined` values. In this library they are considered as the same value.
@@ -375,7 +390,6 @@ console.log(
 
 ```
 
-
 ### parseStrict
 Parse for a object structure from an type A. Need to provide a parser function for each object key.
 The difference between `parse`, is that all provided parser functions need to return always a strict value,
@@ -433,7 +447,6 @@ console.log(
 ); // undefined
 
 ```
-
 
 ### or
 Provide a series of functions and return the result of the first function that does not return `Nothing`.
