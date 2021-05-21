@@ -440,6 +440,7 @@ Provide a series of functions and return the result of the first function that d
 
 Let's take the example from `match2` where we create the reducer, but we need to avoid the case of returning `undefiend`.
 With `or` this problem is solved very easy and nice, as we provide the second that will just return the current state.
+
 ```ts
 import { Reducer } from "redux";
 import { or, match2 } from "fp-utitlities";
@@ -456,6 +457,7 @@ export const _reducer: (s: State.State, a: Actions.Actions) => State.State = or(
 ```
 Another good usage is in combination with parsers, when you want to parse for a union type, where constructors have
 different structure, and you need parse one bby one until you match the right one.
+[ [codesandbox](https://codesandbox.io/s/or-1uvpj?file=/src/index.ts) ]
 
 ```ts 
 import { parse, mPipe, or } from "fp-utilities";
