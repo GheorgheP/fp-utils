@@ -15,7 +15,8 @@
     "url": "git+https://github.com/GheorgheP/fp-utils.git"
   },
   "keywords": [
-    "fp"
+    "fp",
+    "typescript"
   ],
   "author": "gheorghep",
   "license": "MIT",
