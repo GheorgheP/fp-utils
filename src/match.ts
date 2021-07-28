@@ -164,6 +164,43 @@ export function match<
 ): (t: T) => R1 | R2 | R3 | R4 | R5 | R6 | R7 | R8;
 // endregion
 
+// region 9 arguments
+export function match<
+  T extends U,
+  A extends T,
+  B extends T,
+  C extends T,
+  D extends T,
+  E extends T,
+  F extends T,
+  G extends T,
+  H extends T,
+  I extends T,
+  R1,
+  R2,
+  R3,
+  R4,
+  R5,
+  R6,
+  R7,
+  R8,
+  R9,
+  U = A | B | C | D | E | F | G | H | I
+>(
+  ...args: [
+    [(t: T) => t is A, (a: A) => R1],
+    [(t: T) => t is B, (a: B) => R2],
+    [(t: T) => t is C, (a: C) => R3],
+    [(t: T) => t is D, (a: D) => R4],
+    [(t: T) => t is E, (a: E) => R5],
+    [(t: T) => t is F, (a: F) => R6],
+    [(t: T) => t is G, (a: G) => R7],
+    [(t: T) => t is H, (a: H) => R8],
+    [(t: T) => t is I, (a: I) => R9],
+  ]
+): (t: T) => R1 | R2 | R3 | R4 | R5 | R6 | R7 | R8 | R9;
+// endregion
+
 export function match<T extends U, A extends T, R, U = A>(
   ...args: Array<[(t: T) => t is A, (a: A) => R]>
 ): (t: T) => R {
