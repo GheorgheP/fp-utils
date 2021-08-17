@@ -245,6 +245,54 @@ export function match2<
 ): (t: T, t2: T2) => R | R2 | R3 | R4 | R5 | R6 | R7 | R8 | undefined;
 // endregion
 
+// region 9 arguments
+export function match2<
+T extends U,
+T2 extends U2,
+A extends T,
+A2 extends T,
+A3 extends T,
+A4 extends T,
+A5 extends T,
+A6 extends T,
+A7 extends T,
+A8 extends T,
+A9 extends T,
+B extends T2,
+B2 extends T2,
+B3 extends T2,
+B4 extends T2,
+B5 extends T2,
+B6 extends T2,
+B7 extends T2,
+B8 extends T2,
+B9 extends T2,
+R,
+R2,
+R3,
+R4,
+R5,
+R6,
+R7,
+R8,
+R9,
+U = A | A2 | A3 | A4 | A5 | A6 | A7 | A8 | A9,
+U2 = B | B2 | B3 | B4 | B5 | B6 | B7 | B8 | B9
+>(
+...args: [
+  [(t: T) => t is A, (t2: T2) => t2 is B, (a: A, b: B) => R],
+  [(t: T) => t is A2, (t2: T2) => t2 is B2, (a: A2, b: B2) => R2],
+  [(t: T) => t is A3, (t2: T2) => t2 is B3, (a: A3, b: B3) => R3],
+  [(t: T) => t is A4, (t2: T2) => t2 is B4, (a: A4, b: B4) => R4],
+  [(t: T) => t is A5, (t2: T2) => t2 is B5, (a: A5, b: B5) => R5],
+  [(t: T) => t is A6, (t2: T2) => t2 is B6, (a: A6, b: B6) => R6],
+  [(t: T) => t is A7, (t2: T2) => t2 is B7, (a: A7, b: B7) => R7],
+  [(t: T) => t is A8, (t2: T2) => t2 is B8, (a: A8, b: B8) => R8],
+  [(t: T) => t is A9, (t2: T2) => t2 is B9, (a: A9, b: B9) => R9],
+]
+): (t: T, t2: T2) => R | R2 | R3 | R4 | R5 | R6 | R7 | R8 | R9 | undefined;
+// endregion
+
 export function match2<T extends U, T2 extends U2, A extends T, B extends T2, R, U = A, U2 = B>(
   ...args: Array<[(t: T) => t is A, (t: T2) => t is B, (a: A, b: B) => R]>
 ): (t: T, t2: T2) => R | undefined {
