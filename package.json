@@ -35,5 +35,8 @@
   },
   "files": [
     "dist"
-  ]
+  ],
+  "dependencies": {
+    "@typescript-eslint/parser": "^4.29.2"
+  }
 }
