@@ -18,9 +18,8 @@ export function parseStrict<A, B extends Record<any, any> | undefined>(
   parsers: PureParser<A, B>,
   object?: A,
 ): ((object: A) => B) | B {
-  // @ts-expect-error
   return object === undefined
-    ? // @ts-expect-error
+    ? 
       (o: A): B => _parse<PureParser<A, B>>(parsers, o as ParserSource<PureParser<A, B>>)
     : _parse<PureParser<A, B>>(parsers, object as ParserSource<PureParser<A, B>>);
 }

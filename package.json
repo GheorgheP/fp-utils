@@ -21,22 +21,22 @@
   "author": "gheorghep",
   "license": "MIT",
   "devDependencies": {
-    "@types/jest": "^26.0.21",
-    "@types/ramda": "^0.27.39",
-    "@typescript-eslint/eslint-plugin": "^4.19.0",
-    "eslint": "^7.22.0",
-    "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-jest": "^24.3.2",
-    "jest": "^26.6.3",
-    "prettier": "^2.2.1",
-    "ramda": "^0.27.1",
-    "ts-jest": "^26.5.4",
-    "typescript": "^4.0.7"
+    "@types/jest": "^28.1.1",
+    "@types/ramda": "^0.28.14",
+    "@typescript-eslint/eslint-plugin": "^5.28.0",
+    "eslint": "^8.17.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jest": "^26.5.3",
+    "jest": "^28.1.1",
+    "prettier": "^2.7.1",
+    "ramda": "^0.28.0",
+    "ts-jest": "^28.0.5",
+    "typescript": "^4.2.4"
   },
   "files": [
     "dist"
   ],
   "dependencies": {
-    "@typescript-eslint/parser": "^4.29.2"
+    "@typescript-eslint/parser": "^5.28.0"
   }
 }
